@@ -1,0 +1,96 @@
+# Build directories
+build/
+cmake-build-*/
+out/
+
+# Compiled Object files
+*.o
+*.obj
+*.ko
+*.elf
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.a
+*.lib
+*.la
+*.lo
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# CMake
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+Testing/
+
+# Test executables
+tests/test_*
+!tests/test_*.cpp
+!tests/test_*.hpp
+
+# IDE - VSCode
+.vscode/
+*.code-workspace
+.history/
+
+# IDE - CLion
+.idea/
+cmake-build-*/
+
+# IDE - Eclipse
+.cproject
+.project
+.settings/
+
+# IDE - Visual Studio
+.vs/
+*.user
+*.suo
+*.sln.docstates
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Core dumps
+core
+vgcore.*
+*.core
