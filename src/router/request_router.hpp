@@ -11,7 +11,7 @@ public:
     explicit RequestRouter(std::vector<NodeInfo>nodes, int vnodes_per_nodes);
 
     // Get num_replicas closest nodes whose hash is less than hash of key 
-    std::vector<NodeInfo> GetReplicas(const std::string &key, int num_replicas);
+    std::vector<NodeInfo>& GetReplicas(const std::string &key, int num_replicas);
 private:
     // Ring of hashes where node_ids sit on
     std::map<size_t, NodeInfo> ring_;

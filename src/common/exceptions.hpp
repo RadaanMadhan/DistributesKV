@@ -9,3 +9,8 @@ public:
         : std::runtime_error(msg) {}
 };
 
+class StaleDataException : public std::runtime_error {
+public:
+    explicit StaleDataException(const std::string& msg)
+        : std:: runtime_error(msg) {}
+};

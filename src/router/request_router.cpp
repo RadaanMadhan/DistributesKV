@@ -17,7 +17,7 @@ RequestRouter::RequestRouter(std::vector<NodeInfo> nodes, int vnodes_per_node) {
     } 
 }
 
-std::vector<NodeInfo> RequestRouter::GetReplicas(const std::string &key, int num_replicas){
+std::vector<NodeInfo>& RequestRouter::GetReplicas(const std::string &key, int num_replicas){
     if (node_count < num_replicas){
         throw ClusterSizeException("Number of active nodes is less than number of replication nodes requested");
     }
