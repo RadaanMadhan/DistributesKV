@@ -7,19 +7,19 @@
 
 const uint64_t SEED = 0x12345678;
 
-RequestRouter::RequestRouter(std::vector<NodeInfo> nodes, int vnodes_per_node) { 
+RequestRouter::RequestRouter(std::vector<NodeInfo> nodes, int vnodes_per_node) : node_count(nodes.size()) { 
     for (auto &node : nodes){
         for (int vnode_num = 0; vnode_num < vnodes_per_node; vnode_num++){
             // Hash node_id + # + vnode_num for unique hashes to populate ring
-            std::string vnode_id = node.id + "#" + std::to_string(vnode_num);
+            std::string vnode_id = node.id_ + "#" + std::to_string(vnode_num);
             ring_[Hash(vnode_id)] = node;
         } 
     } 
 }
 
-std::vector<NodeInfo>& RequestRouter::GetReplicas(const std::string &key, int num_replicas){
+std::vector<NodeInfo> RequestRouter::GetReplicas(const std::string &key, int num_replicas){
     if (node_count < num_replicas){
-        throw ClusterSizeException("Number of active nodes is less than number of replication nodes requested");
+        throw ClusterSizeException("Number of active nodes(" + std::to_string(node_count) + ")is less than number of replication nodes (" + std::to_string(num_replicas) +") requested");
     }
 
     std::vector<NodeInfo> preference_list;
@@ -29,16 +29,16 @@ std::vector<NodeInfo>& RequestRouter::GetReplicas(const std::string &key, int nu
     size_t key_hash = Hash(key);
     // Closest Node to key
     auto it = ring_.lower_bound(key_hash);
-    while (preference_list.size() < num_replicas){
+    while (preference_list.size() < static_cast<size_t>(num_replicas)){
         // Loop around if at end of map
         if (it == ring_.end()){
             it = ring_.begin();
         }
 
         const NodeInfo& candidate = it->second;
-        if (nodes_added.find(candidate.id) != nodes_added.end()){
+        if (nodes_added.find(candidate.id_) == nodes_added.end()){
             preference_list.push_back(candidate);
-            nodes_added.insert(candidate.id);
+            nodes_added.insert(candidate.id_);
         }
 
         // go to next node in clockwise direction
